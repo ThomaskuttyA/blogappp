@@ -1,0 +1,56 @@
+<div class="container py-5">
+  <div class="card mx-auto shadow" style="max-width: 600px; background-color: rgba(255, 255, 255, 0.9);">
+    <div class="card-body">
+      <h5 class="card-title text-center">Create New Blog</h5>
+      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="topic" class="form-label">Topic</label>
+          <input formControlName="topic" type="text" class="form-control" id="topic" placeholder="Enter the topic" required>
+          <div *ngIf="blogForm.get('topic')?.invalid && (blogForm.get('topic')?.touched || blogForm.get('topic')?.dirty)">
+            <small class="text-danger">Topic is required.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="content" class="form-label">Content</label>
+          <textarea formControlName="content" class="form-control" id="content" rows="10" placeholder="Write your blog content here..." required></textarea>
+          <div *ngIf="blogForm.get('content')?.invalid && (blogForm.get('content')?.touched || blogForm.get('content')?.dirty)">
+            <small class="text-danger">Content is required.</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Submit Post</button>
+      </form>
+
+      <button type="button" class="btn btn-primary mt-3 w-100" (click)="goHome()">Home</button>
+
+      <div *ngIf="submissionError" class="text-danger mt-3">{{ submissionError }}</div>
+      <div *ngIf="submissionSuccess" class="text-success mt-3">{{ submissionSuccess }}</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  body {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .card {
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .card-title {
+    font-weight: bold;
+  }
+
+  .form-control {
+    border-radius: 10px;
+  }
+
+  .btn {
+    border-radius: 10px;
+  }
+</style>

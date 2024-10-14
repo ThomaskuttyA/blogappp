@@ -1,0 +1,17 @@
+<div class="container my-5">
+  <h2 class="text-center">User Profile</h2>
+  <hr>
+
+  <div class="card mx-auto" style="max-width: 500px;">
+    <div class="card-body">
+      <h5 class="card-title text-center">Profile Details</h5>
+      <hr>
+      <div>
+        <p><strong>Username:</strong> {{ username }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <!-- Add more user details as necessary -->
+        <button type="button" class="btn btn-primary mt-3 w-100" (click)="goHome()">Home</button>
+      </div>
+    </div>
+  </div>
+</div>

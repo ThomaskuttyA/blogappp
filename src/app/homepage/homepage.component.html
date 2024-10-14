@@ -1,0 +1,35 @@
+<div class="container text-center my-5">
+  <h1 class="display-4">BLOG APP</h1>
+  <h4>username</h4>
+  <hr class="my-4">
+
+  <div class="mt-4">
+    <button class="btn btn-primary me-2" routerLink="/home">BLOGS HOME</button>
+    <button class="btn btn-secondary me-2" routerLink="/createblog">CREATE NEW BLOGS</button>
+    <button class="btn btn-info me-2">VIEW MY BLOGS</button>
+    <button class="btn btn-warning me-2" routerLink="/profile">PROFILE</button>
+    <button class="btn btn-danger">LOGOUT</button>
+  </div>
+
+  <hr>
+
+  <div class="container my-5">
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="!loading && !blogs.length">No blogs available.</div>
+
+    <div class="row">
+      <div class="col-md-12" *ngFor="let blog of blogs">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.topic }}</h5>
+            <p class="card-text">{{ blog.content }}</p>
+            <button class="btn btn-primary" (click)="toggleLike(blog)">
+              {{ blog.statuslike ? 'Unlike' : 'Like' }}
+            </button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="container py-5">
+  <div class="border p-5 rounded" style="max-width: 400px; margin: auto;">
+    <h2 class="text-center">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input formControlName="email" type="email" class="form-control" id="email" required>
+        <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">
+          <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.required">Email is required.</small>
+          <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.email">Invalid email format.</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input formControlName="password" type="password" class="form-control" id="password" required>
+        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
+          <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.required">Password is required.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+      <p class="mt-3">New to Blog App? <a routerLink="/register">Create New Account</a></p>
+      <div *ngIf="loginError" class="text-danger mt-3">{{ loginError }}</div> <!-- Error message display -->
+    </form>
+  </div>
+</div>
