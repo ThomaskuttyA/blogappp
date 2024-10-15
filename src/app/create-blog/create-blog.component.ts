@@ -12,9 +12,10 @@ export class CreateBlogComponent {
   blogForm: FormGroup;
   submissionError: string | null = null;
   submissionSuccess: string | null = null;
-  userId: number = 1; // Replace with actual user ID from authentication
+  userId: number;
 
   constructor(private fb: FormBuilder, private blogService: BlogService, private router: Router) {
+    this.userId = parseInt(localStorage.getItem('userId') || '0', 10); // Retrieve user ID from local storage
     this.blogForm = this.fb.group({
       topic: ['', Validators.required],
       content: ['', Validators.required]
@@ -23,7 +24,7 @@ export class CreateBlogComponent {
 
   onSubmit() {
     if (this.blogForm.valid) {
-      const blogData = { ...this.blogForm.value, userid: this.userId };
+      const blogData = { ...this.blogForm.value, userid: this.userId }; // Include user ID
       this.blogService.createBlog(blogData).subscribe(
         response => {
           this.submissionSuccess = response.message;

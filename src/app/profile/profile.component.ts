@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,22 +7,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  userId: string | null = null;
   username: string | null = null;
   email: string | null = null;
 
-  constructor(private userService: UserService,private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    const userData = this.userService.getUserData();
-    if (userData) {
-      this.username = userData.username;
-      this.email = userData.email;
+    this.userId = localStorage.getItem('userId');
+    this.username = localStorage.getItem('username');
+    this.email = localStorage.getItem('email');
+
+
+    // Redirect to login if not logged in
+    if (!this.userId || !this.username) {
+      this.router.navigate(['/login']);
     }
   }
-
 
   goHome(): void {
     this.router.navigate(['/home']);
   }
-
 }

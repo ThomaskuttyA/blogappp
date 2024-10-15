@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../services/login.service'; // Adjust path as needed
+import { LoginService, LoginResponse } from '../services/login.service'; // Adjust path as needed
 
 @Component({
   selector: 'app-login',
@@ -22,10 +22,12 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value).subscribe(
-        response => {
+        (response: LoginResponse) => {
           if (response.message === "Login successful.") {
-            // Handle successful login
-            localStorage.setItem('username', this.loginForm.value.email); // Store email as username
+            // Store user ID and username in local storage
+            localStorage.setItem('userId', response.userId || ''); // Store userId
+            localStorage.setItem('username', response.username || '');
+            localStorage.setItem('email', response.username || ''); // Store username
             window.location.href = '/home'; // Redirect to homepage
           } else {
             // Handle login error

@@ -10,6 +10,10 @@ import { RegisterComponent } from './register/register.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { ProfileComponent } from './profile/profile.component';
 
+import { MyBlogsComponent } from './my-blogs/my-blogs.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +21,11 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     RegisterComponent,
     CreateBlogComponent,
-    ProfileComponent
+    ProfileComponent,
+ 
+    MyBlogsComponent,
+
+
   ],
   imports: [
     BrowserModule,
