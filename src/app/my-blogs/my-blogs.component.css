@@ -1,6 +1,9 @@
 .bg-container {
-  background-color: #29c5c5; /* Light gray background */
-  padding: 20px; /* Add some padding around the container */
-  border-radius: 5px; /* Rounded corners for the outer container */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  background-color: #f8f9fa; /* Set your desired background color */
+  padding: 20px; /* Optional: Adds some padding */
+  border-radius: 8px; /* Optional: Rounds the corners */
+}
+
+.card-custom {
+  background-color: #4fc8ec; /* Keep the card background distinct */
 }

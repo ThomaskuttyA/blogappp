@@ -16,11 +16,12 @@ interface Blog {
 export class EditPostComponent implements OnInit {
   blogId!: number;
   blog: Blog = { blogid: 0, topic: '', content: '', userid: 0 };
+  loading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
-    private blogService: BlogService,
-    private router: Router
+    public blogService: BlogService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -32,20 +33,24 @@ export class EditPostComponent implements OnInit {
 
   getBlog(id: number): void {
     this.blogService.getBlogById(id).subscribe(
-      foundBlog => {
+      (foundBlog) => {
+        console.log('Fetched blog:', foundBlog); // Add logging here
         if (foundBlog) {
-          this.blog = foundBlog; // Bind the blog data to the component
+          this.blog = foundBlog; // Assuming this contains the fields
         } else {
           console.error('Blog not found');
           alert('Blog not found.');
         }
+        this.loading = false;
       },
       error => {
-        console.error('Error fetching blog:', error);
-        alert('Failed to fetch blog.');
+        console.error('Error fetching blog:', error); // Log the error
+        alert('Failed to fetch blog.'); // Notify user
+        this.loading = false;
       }
     );
   }
+
 
   updateBlog(): void {
     this.blogService.updateBlog(this.blogId, this.blog).subscribe(
@@ -58,5 +63,9 @@ export class EditPostComponent implements OnInit {
         alert('Failed to update blog.');
       }
     );
+  }
+
+  confirmCancel(): boolean {
+    return confirm('You have unsaved changes. Are you sure you want to cancel?');
   }
 }

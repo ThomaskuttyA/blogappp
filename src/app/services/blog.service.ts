@@ -12,7 +12,8 @@ export class BlogService {
   constructor(private http: HttpClient) {}
 
   private handleError(error: any) {
-    console.error('API error:', error);
+    // Enhanced error logging
+    console.error('API error:', error.status, error.message);
     return throwError(error);
   }
 
@@ -46,6 +47,5 @@ export class BlogService {
       catchError(this.handleError)
     );
   }
-
 
 }

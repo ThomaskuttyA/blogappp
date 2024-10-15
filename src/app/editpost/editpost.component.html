@@ -3,7 +3,7 @@
 
   <div class="card">
     <div class="card-body">
-      <form (ngSubmit)="updateBlog()">
+      <form (ngSubmit)="updateBlog()" *ngIf="!loading">
         <div class="mb-3">
           <label for="topic" class="form-label">Blog Topic</label>
           <input
@@ -29,8 +29,9 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Update Blog</button>
-        <a routerLink="/myblogs" class="btn btn-secondary ms-2">Cancel</a>
+        <a (click)="confirmCancel() ? router.navigate(['/myblogs']) : null" class="btn btn-secondary ms-2">Cancel</a>
       </form>
+      <div *ngIf="loading" class="text-center">Loading...</div>
     </div>
   </div>
 </div>
