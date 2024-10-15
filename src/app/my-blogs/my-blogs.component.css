@@ -1,0 +1,6 @@
+.bg-container {
+  background-color: #29c5c5; /* Light gray background */
+  padding: 20px; /* Add some padding around the container */
+  border-radius: 5px; /* Rounded corners for the outer container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../services/homepage.service';
 
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -9,6 +10,7 @@ import { HomeService } from '../services/homepage.service';
 export class HomepageComponent implements OnInit {
   blogs: any[] = [];
   loading: boolean = true;
+  username: string | null = localStorage.getItem('username');
 
   constructor(private homepageService: HomeService) {}
 
@@ -34,4 +36,7 @@ export class HomepageComponent implements OnInit {
     blog.statuslike = !blog.statuslike; // Toggle the like status
     // Optionally, send the updated status to your backend
   }
+
+
+  
 }

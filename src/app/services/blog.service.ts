@@ -1,23 +1,51 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
-  private createApiUrl = 'http://localhost/thomasapp-api/createblog.php';
-  private fetchApiUrl = 'http://localhost/thomasapp-api/getusersblog.php'; // New endpoint
+  private baseApiUrl = 'http://localhost/thomasapp-api/';
 
   constructor(private http: HttpClient) {}
 
-  createBlog(blogData: { topic: string; content: string; userid: number }): Observable<any> {
-    return this.http.post<any>(this.createApiUrl, blogData, {
+  private handleError(error: any) {
+    console.error('API error:', error);
+    return throwError(error);
+  }
+
+  private request(method: string, url: string, body?: any): Observable<any> {
+    return this.http.request(method, `${this.baseApiUrl}${url}`, {
+      body,
       headers: { 'Content-Type': 'application/json' }
-    });
+    }).pipe(catchError(this.handleError));
+  }
+
+  createBlog(blogData: { topic: string; content: string; userid: number }): Observable<any> {
+    return this.request('POST', 'createblog.php', blogData);
   }
 
   getUserBlogs(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.fetchApiUrl}?userid=${userId}`);
+    return this.http.get<any[]>(`${this.baseApiUrl}getusersblog.php?userid=${userId}`).pipe(
+      catchError(this.handleError)
+    );
   }
+
+  deleteBlog(blogId: number): Observable<any> {
+    return this.request('DELETE', `deliteblog.php?blogid=${blogId}`);
+  }
+
+  updateBlog(blogId: number, blogData: { topic: string; content: string }): Observable<any> {
+    return this.request('PUT', `updateblog.php?blogid=${blogId}`, blogData);
+  }
+
+  getBlogById(blogId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseApiUrl}fetchblog.php?blogid=${blogId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
 }

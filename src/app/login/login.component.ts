@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
             // Store user ID and username in local storage
             localStorage.setItem('userId', response.userId || ''); // Store userId
             localStorage.setItem('username', response.username || '');
-            localStorage.setItem('email', response.username || ''); // Store username
+            localStorage.setItem('email', response.email || ''); // Store username
             window.location.href = '/home'; // Redirect to homepage
           } else {
             // Handle login error

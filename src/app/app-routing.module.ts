@@ -7,6 +7,10 @@ import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 
+import { EditPostComponent } from './editpost/editpost.component';
+
+
+
 
 
 
@@ -18,6 +22,9 @@ const routes: Routes = [
   {path: 'createblog',component:CreateBlogComponent},
   {path:'profile',component:ProfileComponent},
   {path:'myblogs',component:MyBlogsComponent},
+
+  { path: 'edit/:id', component: EditPostComponent },
+
 
  //{ path: 'myblogs', component: UserBlogsComponent },
   //{ path: 'create-blog', component: CreateBlogComponent }// Add other routes here

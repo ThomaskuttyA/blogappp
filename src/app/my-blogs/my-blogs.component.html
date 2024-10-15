@@ -1,7 +1,6 @@
-
-<div class="container text-center my-5">
+<div class="container text-center my-5 bg-container">
   <h1 class="display-4">BLOG APP</h1>
-  <h4>username</h4>
+  <h4>{{ username }}</h4>
   <hr class="my-4">
 
   <div class="mt-4">
@@ -14,20 +13,24 @@
 
   <hr>
 
+  <div class="container my-5 bg-container">
+    <h2 class="text-center">My Blogs</h2>
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="!loading && !blogs.length">No blogs available.</div>
 
-<div class="container my-5">
-  <h2 class="text-center">My Blogs</h2>
-  <div *ngIf="loading">Loading...</div>
-  <div *ngIf="!loading && !blogs.length">No blogs available.</div>
+    <div *ngIf="!loading">
+      <div *ngFor="let blog of blogs" class="card mb-3 card-custom"> <!-- Add 'card-custom' class here -->
+        <div class="card-body">
+          <h5 class="card-title">{{ blog.topic }}</h5>
+          <p class="card-text">{{ blog.blog }}</p>
 
-  <div *ngIf="!loading">
-    <div *ngFor="let blog of blogs" class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ blog.topic }}</h5>
-        <p class="card-text">{{ blog.blog }}</p>
+          <button class="btn btn-info me-2" [routerLink]="['/edit', blog.blogid]">Edit</button>
+
+          <button class="btn btn-danger" (click)="deleteBlog(blog.blogid)">Delete</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <button class="btn btn-primary" (click)="goHome()">Back to Home</button>
+    <button class="btn btn-primary" (click)="goHome()">Back to Home</button>
+  </div>
 </div>

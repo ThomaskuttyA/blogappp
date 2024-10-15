@@ -1,0 +1,36 @@
+<div class="container my-5">
+  <h1 class="text-center">Edit Blog Post</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <form (ngSubmit)="updateBlog()">
+        <div class="mb-3">
+          <label for="topic" class="form-label">Blog Topic</label>
+          <input
+            type="text"
+            id="topic"
+            class="form-control"
+            [(ngModel)]="blog.topic"
+            name="topic"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="content" class="form-label">Blog Content</label>
+          <textarea
+            id="content"
+            class="form-control"
+            [(ngModel)]="blog.content"
+            name="content"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Blog</button>
+        <a routerLink="/myblogs" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>

@@ -9,8 +9,13 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { ProfileComponent } from './profile/profile.component';
-
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
+import { EditPostComponent } from './editpost/editpost.component';
+
+import { FormsModule } from '@angular/forms';
+
+
+
 
 
 
@@ -22,8 +27,15 @@ import { MyBlogsComponent } from './my-blogs/my-blogs.component';
     RegisterComponent,
     CreateBlogComponent,
     ProfileComponent,
- 
+    EditPostComponent,
+
     MyBlogsComponent,
+
+
+
+
+
+
 
 
   ],
@@ -31,7 +43,9 @@ import { MyBlogsComponent } from './my-blogs/my-blogs.component';
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

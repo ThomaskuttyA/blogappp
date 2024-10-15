@@ -5,34 +5,61 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-my-blogs',
   templateUrl: './my-blogs.component.html',
-  styleUrls: ['./my-blogs.component.css'] // Add this if you have a CSS file
 })
 export class MyBlogsComponent implements OnInit {
-  blogs: any[] = [];  // Array to hold the blogs
-  loading: boolean = true; // Loading state
-  userId: number = parseInt(localStorage.getItem('userId') || '0', 10); // Get logged-in user's ID
+  blogs: any[] = [];
+  loading: boolean = true;
+  userId: number = parseInt(localStorage.getItem('userId') || '0', 10);
+  username: string | null = localStorage.getItem('username');
 
   constructor(private blogService: BlogService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('Logged-in user ID:', this.userId); // Log user ID for debugging
-    this.getUserBlogs(); // Fetch blogs when component initializes
+    this.getUserBlogs();
   }
 
   getUserBlogs(): void {
     this.blogService.getUserBlogs(this.userId).subscribe(
       (data: any[]) => {
-        this.blogs = data; // Assign fetched blogs to the array
-        this.loading = false; // Set loading to false
+        this.blogs = data;
+        this.loading = false;
+        console.log("Fetched blogs:", this.blogs);
       },
       (error: any) => {
         console.error('Error fetching user blogs:', error);
-        this.loading = false; // Set loading to false on error
+        this.loading = false;
       }
     );
   }
 
+  deleteBlog(blogId: number): void {
+    console.log("Attempting to delete blog with ID:", blogId); // Log the ID being passed
+  console.log("Current blogs:", this.blogs); // Debug log
+
+  if (blogId === undefined) {
+    console.error('Blog ID is undefined, cannot delete.');
+    return; // Early return if the blogId is undefined
+  }
+    if (confirm("Are you sure you want to delete this blog?")) {
+      this.blogService.deleteBlog(blogId).subscribe(
+        (response) => {
+          console.log(response.message);
+          this.blogs = this.blogs.filter(blog => blog.blogid !== blogId);
+        },
+        (error) => {
+          console.error('Error deleting blog:', error);
+          alert('Failed to delete blog.');
+        }
+      );
+    }
+  }
+
+
   goHome(): void {
-    this.router.navigate(['/home']); // Navigate back to home
+    this.router.navigate(['/home']);
+  }
+
+  editBlog(blogId: number): void {
+    this.router.navigate(['/editblog', blogId]); // Ensure editBlog route is implemented
   }
 }

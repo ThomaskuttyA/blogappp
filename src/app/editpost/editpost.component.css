@@ -1,0 +1,5 @@
+/* styles.css or edit-blog.component.css */
+.card-custom {
+  max-width: 600px; /* Set your desired max width */
+  margin: 0 auto; /* Center the card */
+}
