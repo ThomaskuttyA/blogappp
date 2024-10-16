@@ -39,13 +39,14 @@ export class BlogService {
   }
 
   updateBlog(blogId: number, blogData: { topic: string; content: string }): Observable<any> {
-    return this.request('PUT', `updateblog.php?blogid=${blogId}`, blogData);
+    return this.request('POST', `updateblog.php`, blogData);
   }
 
   getBlogById(blogId: number): Observable<any> {
     return this.http.get<any>(`${this.baseApiUrl}fetchblog.php?blogid=${blogId}`).pipe(
       catchError(this.handleError)
     );
+    console.log('id is',blogId);
   }
 
 }

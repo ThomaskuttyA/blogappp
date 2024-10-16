@@ -9,7 +9,6 @@
     <button class="btn btn-info me-2" routerLink="/myblogs">VIEW MY BLOGS</button>
     <button class="btn btn-warning me-2" routerLink="/profile">PROFILE</button>
     <button class="btn btn-danger" routerLink="/login">LOGOUT</button>
-
   </div>
 
   <hr>
@@ -25,7 +24,7 @@
           <h5 class="card-title">{{ blog.topic }}</h5>
           <p class="card-text">{{ blog.blog }}</p>
 
-          <button class="btn btn-info me-2" [routerLink]="['/edit', blog.blogid]">Edit</button>
+          <button class="btn btn-info me-2" (click)="editBlog(blog.blogid, blog)">Edit</button>
           <button class="btn btn-danger" (click)="deleteBlog(blog.blogid)">Delete</button>
         </div>
       </div>

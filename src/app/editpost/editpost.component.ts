@@ -6,7 +6,7 @@ interface Blog {
   blogid: number;
   topic: string;
   content: string;
-  userid: number; // Assuming this is needed for updates
+  userid: number;
 }
 
 @Component({
@@ -15,7 +15,12 @@ interface Blog {
 })
 export class EditPostComponent implements OnInit {
   blogId!: number;
-  blog: Blog = { blogid: 0, topic: '', content: '', userid: 0 };
+  blog: Blog = {
+    blogid: 0,
+    topic: '',
+    content: '',
+    userid: 0
+  };
   loading: boolean = true;
 
   constructor(
@@ -28,15 +33,19 @@ export class EditPostComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.blogId = +params['id'];
       this.getBlog(this.blogId);
+      const storedBlogId = localStorage.getItem('selectedBlogId');
+      this.blogId = storedBlogId ? parseInt(storedBlogId, 10) : 0; // Default to 0 if not found
+
+    console.log('Blog ID:', this.blogId);
     });
   }
 
   getBlog(id: number): void {
     this.blogService.getBlogById(id).subscribe(
       (foundBlog) => {
-        console.log('Fetched blog:', foundBlog); // Add logging here
+        console.log('Fetched blog:', foundBlog);
         if (foundBlog) {
-          this.blog = foundBlog; // Assuming this contains the fields
+          this.blog = foundBlog; // Use the fetched blog directly
         } else {
           console.error('Blog not found');
           alert('Blog not found.');
@@ -44,15 +53,21 @@ export class EditPostComponent implements OnInit {
         this.loading = false;
       },
       error => {
-        console.error('Error fetching blog:', error); // Log the error
-        alert('Failed to fetch blog.'); // Notify user
+        console.error('Error fetching blog:', error);
+
         this.loading = false;
       }
     );
+
+    // Check local storage for topic and content
+    this.blog.topic = localStorage.getItem('selectedBlogTopic') || '';
+    this.blog.content = localStorage.getItem('selectedBlogContent') || '';
+
   }
 
-
   updateBlog(): void {
+    // Ensure the blogId is set correctly
+    this.blog.blogid = this.blogId; // Set the blogId in the blog object
     this.blogService.updateBlog(this.blogId, this.blog).subscribe(
       () => {
         alert('Blog updated successfully!');

@@ -33,13 +33,6 @@ export class MyBlogsComponent implements OnInit {
   }
 
   deleteBlog(blogId: number): void {
-    console.log("Attempting to delete blog with ID:", blogId); // Log the ID being passed
-  console.log("Current blogs:", this.blogs); // Debug log
-
-  if (blogId === undefined) {
-    console.error('Blog ID is undefined, cannot delete.');
-    return; // Early return if the blogId is undefined
-  }
     if (confirm("Are you sure you want to delete this blog?")) {
       this.blogService.deleteBlog(blogId).subscribe(
         (response) => {
@@ -54,12 +47,17 @@ export class MyBlogsComponent implements OnInit {
     }
   }
 
-
   goHome(): void {
     this.router.navigate(['/home']);
   }
 
-  editBlog(blogId: number): void {
-    this.router.navigate(['/editblog', blogId]); // Ensure editBlog route is implemented
+  editBlog(blogId: number, blog: any): void {
+    // Store the topic and content in local storage
+    localStorage.setItem('selectedBlogId', blogId.toString());
+    localStorage.setItem('selectedBlogTopic', blog.topic);
+    localStorage.setItem('selectedBlogContent', blog.blog);
+
+    // Ensure this matches the correct property name
+    this.router.navigate(['/edit', blogId]);
   }
 }

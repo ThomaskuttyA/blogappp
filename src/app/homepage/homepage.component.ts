@@ -21,13 +21,13 @@ export class HomepageComponent implements OnInit {
   getBlogs(): void {
     this.homepageService.getBlogs().subscribe(
       (data: any[]) => {
-        console.log('Fetched blogs:', data); // Log the fetched data
+        console.log('Fetched blogs:', data);
         this.blogs = data;
-        this.loading = false; // Set loading to false after data is fetched
+        this.loading = false;
       },
       (error: any) => {
         console.error('Error fetching blogs:', error);
-        this.loading = false; // Also set loading to false on error
+        this.loading = false; 
       }
     );
   }
@@ -38,5 +38,5 @@ export class HomepageComponent implements OnInit {
   }
 
 
-  
+
 }
