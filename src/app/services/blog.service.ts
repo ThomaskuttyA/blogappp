@@ -24,7 +24,7 @@ export class BlogService {
     }).pipe(catchError(this.handleError));
   }
 
-  createBlog(blogData: { topic: string; content: string; userid: number;}): Observable<any> {
+  createBlog(blogData: { topic: string; content: string; userid: number; }): Observable<any> {
     return this.request('POST', 'createblog.php', blogData);
   }
 
@@ -46,7 +46,31 @@ export class BlogService {
     return this.http.get<any>(`${this.baseApiUrl}fetchblog.php?blogid=${blogId}`).pipe(
       catchError(this.handleError)
     );
-    console.log('id is',blogId);
+  }
+
+  getAuthors(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseApiUrl}authors.php`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  followAuthor(currentUserId: number, authorId: number): Observable<any> {
+    const followData = { userid: currentUserId, friendid: authorId };
+    return this.http.post<any>(`${this.baseApiUrl}follow.php`, followData).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getFollowers(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseApiUrl}getFollowers.php?userid=${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getFollowing(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseApiUrl}getFollowing.php?userid=${userId}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
 }

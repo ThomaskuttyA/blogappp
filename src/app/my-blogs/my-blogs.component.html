@@ -1,7 +1,7 @@
 <div class="container text-center my-5" style="background-color: #e4f7a0;">
   <h1 class="display-4">BLOG APP</h1>
   <h4>Welcome {{ username }}</h4>
-  YOUR BLOGS ARE BELOW
+  <p>{{username}} 'S blogs are below</p>
   <hr class="my-4">
 
   <div class="mt-4">
@@ -9,6 +9,7 @@
     <button class="btn btn-secondary me-2" routerLink="/createblog">CREATE NEW BLOGS</button>
     <button class="btn btn-info me-2" routerLink="/myblogs">VIEW MY BLOGS</button>
     <button class="btn btn-warning me-2" routerLink="/profile">PROFILE</button>
+    <button class="btn btn-success me-2" routerLink="/authors">AUTHORS</button>
     <button class="btn btn-danger" routerLink="/login">LOGOUT</button>
   </div>
 
@@ -20,13 +21,18 @@
     <div *ngIf="!loading && !blogs.length">No blogs available.</div>
 
     <div *ngIf="!loading">
-      <div *ngFor="let blog of blogs" class="card mb-3 card-custom">
-        <div class="card-body">
-          <h5 class="card-title">{{ blog.topic }}</h5>
-          <p class="card-text">{{ blog.blog }}</p>
-
-          <button class="btn btn-info me-2" (click)="editBlog(blog.blogid, blog)">Edit</button>
-          <button class="btn btn-danger" (click)="deleteBlog(blog.blogid)">Delete</button>
+      <div class="row">
+        <div *ngFor="let blog of blogs" class="col-md-4 d-flex mb-4">
+          <div class="card w-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.topic }}</h5>
+              <p class="card-text">{{ blog.blog }}</p>
+            </div>
+            <div class="card-footer text-center">
+              <button class="btn btn-info me-2" (click)="editBlog(blog.blogid, blog)">Edit</button>
+              <button class="btn btn-danger" (click)="deleteBlog(blog.blogid)">Delete</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

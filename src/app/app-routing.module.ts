@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 
 import { EditPostComponent } from './editpost/editpost.component';
+import { AuthorsComponent } from './authors/authors.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'createblog',component:CreateBlogComponent},
   {path:'profile',component:ProfileComponent},
   {path:'myblogs',component:MyBlogsComponent},
+  {path:'authors',component:AuthorsComponent},
 
   { path: 'edit/:id', component: EditPostComponent },
 

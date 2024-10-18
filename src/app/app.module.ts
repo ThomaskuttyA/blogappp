@@ -13,6 +13,7 @@ import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 import { EditPostComponent } from './editpost/editpost.component';
 
 import { FormsModule } from '@angular/forms';
+import { AuthorsComponent } from './authors/authors.component';
 
 
 
@@ -30,6 +31,8 @@ import { FormsModule } from '@angular/forms';
     EditPostComponent,
 
     MyBlogsComponent,
+
+    AuthorsComponent,
 
 
 

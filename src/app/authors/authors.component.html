@@ -1,0 +1,35 @@
+<div class="container my-5 text-center">
+  <h2 class="display-4">AUTHORS OF THE BLOGS</h2>
+  <hr class="my-4" />
+  <p class="lead">Follow the authors to see their posts on the feeds</p>
+  <hr />
+
+  <div *ngIf="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <div *ngIf="!loading && authors.length === 0" class="text-center">
+    <h5>No authors available.</h5>
+  </div>
+
+  <div *ngIf="!loading && authors.length > 0" class="row mt-4">
+    <div *ngFor="let author of authors" class="col-md-4 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ author.name }}</h5>
+          <p class="card-text text-muted">ID: {{ author.userid }}</p>
+          <button
+            class="btn"
+            [ngClass]="{'btn-outline-primary': !author.following, 'btn-danger': author.following}"
+            (click)="toggleFollow(author)"
+          >
+            {{ author.following ? 'Following' : 'Follow' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary me-2 hover-zoom" routerLink="/home">BLOGS HOME</button>
+  <button class="btn btn-info me-2" routerLink="/myblogs">VIEW MY BLOGS</button>
+  <button class="btn btn-danger"routerLink="/login">LOGOUT</button>
+</div>
