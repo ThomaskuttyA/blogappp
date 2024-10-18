@@ -4,14 +4,18 @@
 
   <div class="card mx-auto shadow" style="max-width: 400px;">
     <div class="card-body text-center">
-      <h5 class="card-title">Profile Details</h5>
+      <h5 class="card-title">Profile Details of {{username}}</h5>
       <hr>
       <div>
         <p><strong>User ID:</strong> {{ userId }}</p>
         <p><strong>Name:</strong> {{ username }}</p>
         <p><strong>Email ID:</strong> {{ email }}</p>
+        <p><strong>Followers:</strong>   {{ followers.length }}</p>
+        <p><strong>Following:</strong>  {{ following.length }}</p>
 
         <button type="button" class="btn btn-primary mt-3 w-100" (click)="goHome()">Home</button>
+        <button type="button" class="btn btn-info mt-3 w-100">CHANGE PASSWORD</button>
+        <button class="btn btn-danger mt-3 w-100"routerLink="/login">LOGOUT</button>
       </div>
     </div>
   </div>
@@ -56,7 +60,7 @@
   }
 
   .list-group-item:hover {
-    background-color: #f1f1f1; /* Light gray on hover */
+    background-color: #f1f1f1;
   }
 
   h2 {
@@ -65,11 +69,11 @@
 
   h4 {
     font-weight: 600;
-    width: max-content; /* Set the width to only fit the content */
-    margin: 0 auto; /* Center the heading */
+    width: max-content;
+    margin: 0 auto;
   }
 
   .text-center {
-    text-align: center; /* Centers the text */
+    text-align: center; 
   }
 </style>

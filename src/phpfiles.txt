@@ -278,4 +278,127 @@ $conn->close();
 _----------------------------------------------------
 --------------------------------------------------
 
+follow.php
+
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+if (isset($data['userid']) && isset($data['friendid'])) {
+    $userid = $data['userid'];
+    $friendid = $data['friendid'];
+
+    $stmt = $conn->prepare("INSERT INTO followlist (userid, friendid) VALUES (?, ?)");
+    $stmt->bind_param("ii", $userid, $friendid);
+
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Followed successfully."]);
+    } else {
+        echo json_encode(["message" => "Error: " . $stmt->error]);
+    }
+
+    $stmt->close();
+} else {
+    echo json_encode(["message" => "Invalid input."]);
+}
+
+$conn->close();
+?>
+
+
+---------------------------------------------
+---------------------------------------------
+
+getFollowers.php
+
+
+
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
+$userId = intval($_GET['userid']);
+
+$query = "SELECT f.userid, u.name FROM followlist f
+          JOIN bloglogin u ON f.userid = u.userid
+          WHERE f.friendid = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$followers = [];
+while ($row = $result->fetch_assoc()) {
+    $followers[] = $row;
+}
+
+echo json_encode($followers);
+$stmt->close();
+$conn->close();
+?>
+
+-------------------------------------
+-------------------------------------
+
+getFollowing.php
+
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
+$userId = intval($_GET['userid']);
+
+$query = "SELECT f.friendid, u.name FROM followlist f
+          JOIN bloglogin u ON f.friendid = u.userid
+          WHERE f.userid = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$following = [];
+while ($row = $result->fetch_assoc()) {
+    $following[] = $row;
+}
+
+echo json_encode($following);
+$stmt->close();
+$conn->close();
+?>
+
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------
+authors.php
+
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
+$query = "SELECT userid, name FROM bloglogin"; // Adjust the table name and columns as necessary
+$result = $conn->query($query);
+
+$authors = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $authors[] = $row;
+    }
+}
+
+echo json_encode($authors);
+
+$conn->close();
+?>
+
+-----------------------------------------
+------------------------------------------
 
