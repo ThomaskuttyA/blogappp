@@ -1,0 +1,281 @@
+createblog.php
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+// Ensure data is received
+if (!$data) {
+    echo json_encode(["message" => "No data received."]);
+    exit;
+}
+
+$topic = $data['topic'];
+$content = $data['content'];
+$userid = $data['userid']; // Capture userid
+
+// Prepare and bind for insertion
+$stmt = $conn->prepare("INSERT INTO blogs (userid, topic, blog) VALUES (?, ?, ?)");
+$stmt->bind_param("iss", $userid, $topic, $content); // Note the new parameter for userid
+
+if ($stmt->execute()) {
+    echo json_encode(["message" => "Blog created successfully."]);
+} else {
+    echo json_encode(["message" => "Error: " . $stmt->error]);
+}
+
+$stmt->close();
+$conn->close();
+?>
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+getuserblog.php
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Validate the userId parameter
+if (!isset($_GET['userid']) || !is_numeric($_GET['userid'])) {
+    echo json_encode(["message" => "Invalid user ID."]);
+    exit;
+}
+
+$userId = intval($_GET['userid']); // Convert to integer for safety
+
+$stmt = $conn->prepare("SELECT * FROM blogs WHERE userid = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$blogs = [];
+while ($row = $result->fetch_assoc()) {
+    $blogs[] = $row;
+}
+
+// Return the blogs as JSON
+echo json_encode($blogs);
+
+$stmt->close();
+$conn->close();
+?>
+----------------------------------------------------
+--------------------------------------------------
+deliteblog.php
+
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Validate the blogId parameter
+if (!isset($_GET['blogid']) || !is_numeric($_GET['blogid'])) {
+    echo json_encode(["message" => "Invalid blog ID."]);
+    exit;
+}
+
+$blogId = intval($_GET['blogid']); // Convert to integer for safety
+
+$stmt = $conn->prepare("DELETE FROM blogs WHERE blogid = ?");
+$stmt->bind_param("i", $blogId);
+if ($stmt->execute()) {
+    echo json_encode(["message" => "Blog deleted successfully."]);
+} else {
+    echo json_encode(["message" => "Failed to delete blog."]);
+}
+
+$stmt->close();
+$conn->close();
+?>
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+updateblog.php
+<?php
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Retrieve the input data
+$data = json_decode(file_get_contents("php://input"), true);
+
+// Ensure data is received
+if (!$data || !isset($data['blogid'])) {
+    echo json_encode(["message" => "Invalid input."]);
+    exit;
+}
+
+$blogid = $data['blogid']; // Capture blog ID
+$topic = $data['topic'];
+$content = $data['content'];
+
+// Prepare and bind for update
+$stmt = $conn->prepare("UPDATE blogs SET topic = ?, blog = ? WHERE blogid = ?");
+$stmt->bind_param("ssi", $topic, $content, $blogid);
+
+if ($stmt->execute()) {
+    echo json_encode(["message" => "Blog updated successfully."]);
+} else {
+    echo json_encode(["message" => "Error: " . $stmt->error]);
+}
+
+$stmt->close();
+$conn->close();
+?>
+------------------------------------------
+-------------------------------------------
+fetchblog.php
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *'); // For CORS
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+
+include 'db_connection.php';
+
+$blogid = isset($_GET['blogid']) ? intval($_GET['blogid']) : 0;
+
+if ($blogid > 0) {
+    $sql = "SELECT * FROM blogs WHERE blogid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $blogid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo json_encode($result->fetch_assoc());
+    } else {
+        echo json_encode(['error' => 'Blog not found']);
+    }
+} else {
+    echo json_encode(['error' => 'Invalid blog ID']);
+}
+
+$conn->close();
+?>
+---------------------------------------------------------------
+---------------------------------------------------------------
+getblog.php
+
+<?php
+require_once 'dbconfig.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET");
+
+$stmt = $conn->prepare("SELECT blogid, userid, topic, blog, statuslike FROM blogs ORDER BY blogid DESC");
+if (!$stmt) {
+    echo json_encode(["error" => "SQL error: " . $conn->error]);
+    exit;
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+
+$blogs = [];
+while ($row = $result->fetch_assoc()) {
+    $blogs[] = [
+        'blogid' => $row['blogid'],  // Ensure this key matches the SQL column name
+        'userId' => $row['userid'],
+        'topic' => $row['topic'],
+        'content' => $row['blog'],
+        'statuslike' => $row['statuslike'],
+    ];
+}
+
+echo json_encode($blogs);
+$stmt->close();
+$conn->close();
+?>
+
+-------------------------------------------------------------------
+----------------------------------------------------------------------
+
+blogapplogin.php
+
+
+
+<?php
+
+require_once 'dbconfig.php';
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+if (!$data) {
+    echo json_encode(["message" => "No data received."]);
+    exit;
+}
+
+$email = $data['email'];
+$password = $data['password'];
+
+// Validate email format
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(["message" => "Invalid email format."]);
+    exit;
+}
+
+$stmt = $conn->prepare("SELECT userid, name, password ,email FROM bloglogin WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    echo json_encode(["message" => "User not found."]);
+    $stmt->close();
+    $conn->close();
+    exit;
+}
+
+$row = $result->fetch_assoc();
+$hashedPassword = $row['password'];
+
+if (password_verify($password, $hashedPassword)) {
+    echo json_encode([
+        "message" => "Login successful.",
+        "userId" => $row['userid'],
+        "username" => $row['name'],
+        "email" => $row['email'],
+
+    ]);
+} else {
+    echo json_encode(["message" => "Invalid password."]);
+}
+
+$stmt->close();
+$conn->close();
+
+
+
+
+_----------------------------------------------------
+--------------------------------------------------
+
+

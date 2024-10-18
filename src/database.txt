@@ -1,0 +1,164 @@
+bloglogin
+
+
+--
+ phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 16, 2024 at 01:41 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `thomas`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bloglogin`
+--
+
+CREATE TABLE `bloglogin` (
+  `userid` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+bloglogin.php
+--
+-- Dumping data for table `bloglogin`
+--
+
+INSERT INTO `bloglogin` (`userid`, `email`, `name`, `password`) VALUES
+(35, 'absu@gmail.com', 'Absu', '$2y$10$mPgtEvPsFuQ7yYOtHEtnMeXrDvPcp.a4t5puaViDR3/ehPSjw2Zry'),
+(32, 'absulin@gmail.com', 'Absulin', '$2y$10$3OGNc6tR78wzoot6GBCJreQTOO/Svfvl.zVCDDsXhie3Zf7LmYBpq'),
+(31, 'admin@gmail.com', 'Admin Admin', '$2y$10$2/ocmrLIF5srxWBSkWgse.QUsxhjg6ZAZrDz8rxPpUxPPQxSnEJoO'),
+(33, 'asaja@gmail.com', 'asaja', '$2y$10$Yg1iXYB7dpkFlLGlhsNa9eS/KHO9UFcw3HF8Gnz1MUop.T3vLnqIy'),
+(34, 'kj@gmail.com', 'KJ', '$2y$10$lMMxpUx6Z6JSQ3rdwIOXvOvUkMe2rvVJJiIQZgg7wR1FYjjImtXJO'),
+(23, 'thomaskuttya55@gmail.com', 'Thomaskutty A', '$2y$10$HRNNkPtWHB6bCr2RQpx9/uOjw2ICynS9NjqHss6uhxbxRi/Ak7Ap2');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `bloglogin`
+--
+ALTER TABLE `bloglogin`
+  ADD PRIMARY KEY (`email`),
+  ADD UNIQUE KEY `userid` (`userid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `bloglogin`
+--
+ALTER TABLE `bloglogin`
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+-----------------------------------------------------
+---------------------------------------------------
+blogs
+
+
+
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 16, 2024 at 01:42 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `thomas`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blogs`
+--
+
+CREATE TABLE `blogs` (
+  `userid` int(11) NOT NULL,
+  `blogid` int(11) NOT NULL,
+  `blog` varchar(800) NOT NULL,
+  `statuslike` tinyint(1) NOT NULL DEFAULT 0,
+  `comment` varchar(100) DEFAULT NULL,
+  `topic` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `blogs`
+--
+
+INSERT INTO `blogs` (`userid`, `blogid`, `blog`, `statuslike`, `comment`, `topic`) VALUES
+(23, 45, 'Blog this is me here\nBlog sample Thomaskutty a A blog is a type of website or part of a website where an individual or group regularly shares written content, often called \"posts.\" These posts can cover a wide range of topics, such as personal experiences, news, tutorials, reviews, or opinions. Key features of blogs include: Chronological Order: Posts are usually displayed in reverse chronological order, with the most recent posts at the top. Interactivity: Many blogs allow readers to comment on posts, fostering interaction between the author and the audience. Categories and Tags: Posts can be organized into categories or tagged with keywords to make it easier for readers to find related content. Author Information: Blogs often include information about the author, such as a bio or links t', 0, NULL, 'Second Blog Test done complecte'),
+(31, 52, 'Web-hosting-300x427px.png\nBlogging\nAug 13, 2024\n\nTashia T.\n\n33min Read\n\n55+ Most Popular Blog Examples You Need to Check Out for Inspiration\n55+ Most Popular Blog Examples You Need to Check Out for Inspiration\nA blog is a website or page that is a part of a larger website. Typically, it features articles written in a conversational style with accompanying pictures or videos.\n\nBlogging has gained immense popularity due to its enjoyable and adaptable nature, allowing for self-expression and social connections. In addition, it serves as a platform for enhancing writing skills and promoting businesses.\n\nFurthermore, a professional blogger can even make money from blogging in various ways, such as Google ads and Amazon affiliate links. Successful blogs can cover any topic. No matter what subjec', 0, NULL, 'Testing Blog For Admin'),
+(31, 54, 'hi i am the admin', 0, NULL, 'admin'),
+(33, 59, '892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961v8921086961892108696189210869618921086961892108696189210869618921086961vvvv89210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961v8921086961892108696189210869618921086961892108696189210869618921086961vvvv89210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961892108696189210869618921086961v8921086961892108696189210869618921086961892108696189210869618921086961vvvv8921086961892108696189210869618921086961892108696189210', 0, NULL, 'ASAJA BLOG'),
+(23, 61, 'loding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedvvvloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complectedloding testing complec', 0, NULL, 'Testing is complected'),
+(34, 62, 'kj', 0, NULL, 'kj'),
+(35, 63, 'hi thomas dzsdfa hgsaghd agdyas ', 0, NULL, 'hii i am thomas');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`blogid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+  MODIFY `blogid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
