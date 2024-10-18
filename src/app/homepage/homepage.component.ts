@@ -12,6 +12,7 @@ export class HomepageComponent implements OnInit {
   loading: boolean = true;
   username: string | null = localStorage.getItem('username');
 
+
   constructor(private homepageService: HomeService) {}
 
   ngOnInit(): void {
@@ -27,7 +28,7 @@ export class HomepageComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error fetching blogs:', error);
-        this.loading = false; 
+        this.loading = false;
       }
     );
   }

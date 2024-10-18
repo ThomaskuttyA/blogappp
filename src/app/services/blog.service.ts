@@ -24,7 +24,7 @@ export class BlogService {
     }).pipe(catchError(this.handleError));
   }
 
-  createBlog(blogData: { topic: string; content: string; userid: number }): Observable<any> {
+  createBlog(blogData: { topic: string; content: string; userid: number;}): Observable<any> {
     return this.request('POST', 'createblog.php', blogData);
   }
 

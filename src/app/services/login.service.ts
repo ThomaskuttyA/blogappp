@@ -7,7 +7,8 @@ export interface LoginResponse {
   message: string;
   userId?: string;   // Optional userId
   username?: string;
-  email?:string; // Optional username
+  email?:string;
+   // Optional username
 }
 
 @Injectable({
